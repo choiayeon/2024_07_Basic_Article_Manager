@@ -5,17 +5,11 @@ import java.util.Scanner;
 
 /*
 
-게시물 상세보기
+게시물 삭제 
 
-(2번 게시물이 존재하는 경우)
-
-article detail 2
-
-(2번 게시물이 존재하지 않는 경우)
-
-사용자가 원하는 게시물이 있나 없나 검증
-
-게시물은 어디에 저장되고 있나
+articles 에서 삭제해야함
+artitles 는 list
+list에서 요소값을 삭제하는 방법
 
 
 
@@ -86,10 +80,6 @@ public class Main {
 
 				String[] cmdBits = cmd.split(" "); //리턴 타입 String array
 		
-				//cmdBits[2] -> 2
-				//cmdBits[2] -> asd
-				//cmdBits[2] 값이 형변환이 가능한지 아닌지
-				
 				int id = 0;
 				
 				try { //예외처리
@@ -121,11 +111,43 @@ public class Main {
 				
 				
 			}
-			
+			else if (cmd.startsWith("article delete ")) {
+
+				String[] cmdBits = cmd.split(" "); //리턴 타입 String array
+		
+				int id = 0;
+				
+				try { //예외처리
+					id = Integer.parseInt(cmdBits[2]); //정수로 형 변환 
+				} catch (NumberFormatException e) {
+					System.out.println("명령어가 올바르지 않습니다.");
+					continue;
+				} catch (Exception e) { //모든예외처리 
+					System.out.println("error : " + e);
+				}
+				
+				Article foundArticle = null;
+				
+				for (Article article : articles) {
+					if(id == article.id) {
+						foundArticle =article;
+						break;
+					}
+				
+				}
+				if (foundArticle == null) {
+					System.out.println(id  + "번 게시물은 존재하지 않습니다." );
+					continue;
+				}
+				
+				articles.remove(foundArticle); //지우고자 하는 게시물을 넣는다.
+				
+				
+				System.out.println(id + "번 계시물을 삭제했습니다.");	
+			}
 			else {
 				System.out.println("존재하지 않는 명령어 입니다");
 			}
-
 		}
 		sc.close();
 		
@@ -145,10 +167,6 @@ class Article {
 		this.title = title;
 		this.body = body;
 			
-	}
-
-	
-	
-	
+	}	
 }
 
