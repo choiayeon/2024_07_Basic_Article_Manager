@@ -4,33 +4,19 @@ import java.util.Scanner;
 
 
 /*
-article write를 통해 게시물이 작성되면 
-- 사용자가 입력한 제목, 내용의 데이터를 가진 게시물이 저장되어야 한다.
-- 게시물로 저장할 데이터에는 제목, 내용 그리고 번호가지 포함을 시켜야 한다
-- 저장된 게시물들의 데이터를 article list시에 보여줄 수 있어야 하므로, 
-서로 다른 조건 부분에서 공통으로 접근 할 수 있는 무언가가 필요할 것
 
-article list를 했을 때 실제로 작성된 게시물의 목록이 나오도록
-게시물이 2개 존재할 때의 예시
-번호    |		제목
-2		|		제목2
-1		|		제목3
-> 반복문을 돌려서 list에 들어있는 것을 하나하나 보여준다.
+게시물 상세보기
 
-명령어가 article list
+(2번 게시물이 존재하는 경우)
 
-1. 제목, 내용을 입력받아서 변수에 저장
+article detail 2
 
-2. 변수는 값을 하나밖에 가지지 못하기 때문에 게시물들에 대한 처리가 불가능하구나
+(2번 게시물이 존재하지 않는 경우)
 
-3. 복수의 데이터를 처리하기 위해서 무엇을 사용해야 하는가? >객체사용
+사용자가 원하는 게시물이 있나 없나 검증
 
-4. list를 사용해서 게시물들에 대한 데이터를 저장해두면 되겠구나
+게시물은 어디에 저장되고 있나
 
-5. 게시물이라는 데이터 타입을 생성해서 번호, 제목, 내용 데이터를 저장해야겠다.
-
-6. 계시물이라는 타입을 생성해서 객체로 활용할 때 연관성 부분에 문제가 없으니
-정말로 생성해도 되겠구나
 
 
 */
@@ -95,7 +81,51 @@ public class Main {
 					System.out.printf("%d	|	%s\n", article.id,article.title);
 					}
 				
+			}
+			else if (cmd.startsWith("article detail ")) {
+				//cmd.startsWith("article detail")
+				//cmd가 가진 String값이 startsWtith메서드를 실행할때
+				//넘겨주고 있는 인자값으로 시작하면 true 그렇제 않으면 false
+				//article detail만 치면 입력을 받을때 trim이 있어 공백이 제거되
+				//false를 반환한다.
+				String[] cmdBits = cmd.split(" "); //리턴 타입 String array
+				//split(" ") > 공백을 기점으로 String을 잘라냄
+				//cmd.substring(3); > 리턴 타입 String
+				//3번 인덱스 부터 데이터를 가져와라.
+				int id = Integer.parseInt(cmdBits[2]);
 				
+//				int a = 0; // for문이 실행됬는지 판단하기 위한 변수
+//				
+//				for (Article article : articles) {
+//					if (id == article.id) {
+//						// == 은 둘이 타입이 다르기 때문에 (String,int) 안됨
+//						// 올바른 값 비교  
+//						//게시물이 가진 데이터는 이미 만들어진 데이터
+//						// > 개발자의 입장에서 한번 재가공한 뒤 검증하겠다.
+//						// > 데이터의 무결성이 보장되지 못한 상황이 된다.
+//						System.out.printf("번호 : %d\n",article.id);
+//						System.out.printf("제목 : %s\n",article.title);
+//						System.out.printf("내용 : %s\n",article.body);
+//						
+//						a = 1; 
+//					}
+//				if( a == 0 ){
+//					System.out.println(id + "번 게시물은 존재하지 않습니다.");
+//					}
+				
+				Article foundArticle = null;
+				
+				for (Article article : articles) {
+					if(id == article.id) {
+						foundArticle =article;
+						break;
+					}
+				
+				}
+				if (foundArticle == null) {
+					System.out.println(id  + "번 게시물은 존재하지 않습니다." );
+					continue;
+				}
 				
 			}
 			
