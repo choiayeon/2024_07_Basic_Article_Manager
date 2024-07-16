@@ -83,35 +83,23 @@ public class Main {
 				
 			}
 			else if (cmd.startsWith("article detail ")) {
-				//cmd.startsWith("article detail")
-				//cmd가 가진 String값이 startsWtith메서드를 실행할때
-				//넘겨주고 있는 인자값으로 시작하면 true 그렇제 않으면 false
-				//article detail만 치면 입력을 받을때 trim이 있어 공백이 제거되
-				//false를 반환한다.
+
 				String[] cmdBits = cmd.split(" "); //리턴 타입 String array
-				//split(" ") > 공백을 기점으로 String을 잘라냄
-				//cmd.substring(3); > 리턴 타입 String
-				//3번 인덱스 부터 데이터를 가져와라.
-				int id = Integer.parseInt(cmdBits[2]);
+		
+				//cmdBits[2] -> 2
+				//cmdBits[2] -> asd
+				//cmdBits[2] 값이 형변환이 가능한지 아닌지
 				
-//				int a = 0; // for문이 실행됬는지 판단하기 위한 변수
-//				
-//				for (Article article : articles) {
-//					if (id == article.id) {
-//						// == 은 둘이 타입이 다르기 때문에 (String,int) 안됨
-//						// 올바른 값 비교  
-//						//게시물이 가진 데이터는 이미 만들어진 데이터
-//						// > 개발자의 입장에서 한번 재가공한 뒤 검증하겠다.
-//						// > 데이터의 무결성이 보장되지 못한 상황이 된다.
-//						System.out.printf("번호 : %d\n",article.id);
-//						System.out.printf("제목 : %s\n",article.title);
-//						System.out.printf("내용 : %s\n",article.body);
-//						
-//						a = 1; 
-//					}
-//				if( a == 0 ){
-//					System.out.println(id + "번 게시물은 존재하지 않습니다.");
-//					}
+				int id = 0;
+				
+				try { //예외처리
+					id = Integer.parseInt(cmdBits[2]); //정수로 형 변환 
+				} catch (NumberFormatException e) {
+					System.out.println("명령어가 올바르지 않습니다.");
+					continue;
+				} catch (Exception e) { //모든예외처리 
+					System.out.println("error : " + e);
+				}
 				
 				Article foundArticle = null;
 				
@@ -126,6 +114,11 @@ public class Main {
 					System.out.println(id  + "번 게시물은 존재하지 않습니다." );
 					continue;
 				}
+				
+				System.out.printf("번호 : %d\n",foundArticle.id);
+				System.out.printf("제목 : %s\n",foundArticle.title);
+				System.out.printf("내용 : %s\n",foundArticle.body);
+				
 				
 			}
 			
