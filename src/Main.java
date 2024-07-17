@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -5,13 +7,13 @@ import java.util.Scanner;
 
 /*
 
-게시물 삭제 
+게시물을 작성하는 시점의 현재 날짜와 시간을 구해서 게시물과 함께 저장
+게시물이 작성되는 시점 
+현재 날짜와 시간데이터 
+한개의 게시물 -> article 객체 (여기에 같이 저장) 
 
-articles 에서 삭제해야함
-artitles 는 list
-list에서 요소값을 삭제하는 방법
 
-
+목록, 상세보기 시에 게시물이 쓰여진 데이터가 같이 나타날 수 있도록 
 
 */
 public class Main {
@@ -51,9 +53,9 @@ public class Main {
 				System.out.printf("내용: ");
 				String body = sc.nextLine();
 				
-				lastArticleId++;
+				lastArticleId++;	
 				
-				Article article = new Article(lastArticleId,title,body);
+				Article article = new Article(lastArticleId,Util.getDateStr(),title,body);
 				
 				articles.add(article);
 				
@@ -68,11 +70,11 @@ public class Main {
 					
 				}
 					
-				System.out.println("번호	|	제목");
+				System.out.println("번호	|	제목	|	작성일");
 					
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
-					System.out.printf("%d	|	%s\n", article.id,article.title);
+					System.out.printf("%d	|	%s\n", article.id,article.title,article.regDate);
 					}
 				
 			}
@@ -106,6 +108,7 @@ public class Main {
 				}
 				
 				System.out.printf("번호 : %d\n",foundArticle.id);
+				System.out.printf("작성일 : %s\n",foundArticle.regDate);
 				System.out.printf("제목 : %s\n",foundArticle.title);
 				System.out.printf("내용 : %s\n",foundArticle.body);
 				
@@ -173,17 +176,6 @@ public class Main {
 				//Article foundArticle = null;
 				int foundIndex = -1;//절대가질수없는 인덱스값을 초기값으로 설명 
 				
-				/*
-				for (int i = 0; i < articles.size(); i ++) {
-					Article article = articles.get(i);
-					if(id == article.id) {
-							foundIndex = i;
-							break;
-						}
-					
-				}
-				*/
-				
 				int i = 0;
 				for (Article article : articles) {
 					if (id == article.id) {
@@ -220,12 +212,15 @@ public class Main {
 
 class Article {
 	int id;
+	String regDate;
 	String title;
 	String body;
 	
-	public Article(int id,String title,String body) { //생성자
-
+	public Article(int id,String regDate,String title,String body) { //생성자
+		
+		
 		this.id = id;
+		this.regDate = regDate;
 		this.title = title;
 		this.body = body;
 			
