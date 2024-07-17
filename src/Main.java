@@ -111,6 +111,50 @@ public class Main {
 				
 				
 			}
+			else if (cmd.startsWith("article modify ")) {
+
+				String[] cmdBits = cmd.split(" "); //리턴 타입 String array
+		
+				int id = 0;
+				
+				try { //예외처리
+					id = Integer.parseInt(cmdBits[2]); //정수로 형 변환 
+				} catch (NumberFormatException e) {
+					System.out.println("명령어가 올바르지 않습니다.");
+					continue;
+				} catch (Exception e) { //모든예외처리 
+					System.out.println("error : " + e);
+				}
+
+				Article foundArticle = null;
+				
+				for (Article article : articles) {
+					if (id == article.id) {
+						foundArticle = article;
+						break;
+					}
+				}
+				
+				if (foundArticle == null) {
+					System.out.println(id  + "번 게시물은 존재하지 않습니다." );
+					continue;
+				}
+				//수정할 제목과 내용을 사용자에게 입력 받고 
+				System.out.printf("수정할 제목: ");
+				String title = sc.nextLine();
+				
+				System.out.printf("수정할 내용: ");
+				String body = sc.nextLine();
+				
+				//입력받은 애용으로 값을 수정 
+				foundArticle.title = title;
+				foundArticle.body = body;
+				
+				
+				
+				System.out.println(id + "번 계시물을 수정했습니다.");	
+			}
+			
 			else if (cmd.startsWith("article delete ")) {
 
 				String[] cmdBits = cmd.split(" "); //리턴 타입 String array
@@ -126,25 +170,43 @@ public class Main {
 					System.out.println("error : " + e);
 				}
 				
-				Article foundArticle = null;
+				//Article foundArticle = null;
+				int foundIndex = -1;//절대가질수없는 인덱스값을 초기값으로 설명 
 				
-				for (Article article : articles) {
+				/*
+				for (int i = 0; i < articles.size(); i ++) {
+					Article article = articles.get(i);
 					if(id == article.id) {
-						foundArticle =article;
+							foundIndex = i;
+							break;
+						}
+					
+				}
+				*/
+				
+				int i = 0;
+				for (Article article : articles) {
+					if (id == article.id) {
+						foundIndex = i;
 						break;
 					}
-				
+					i++;
 				}
-				if (foundArticle == null) {
+				
+				if (foundIndex == -1) {
 					System.out.println(id  + "번 게시물은 존재하지 않습니다." );
 					continue;
 				}
 				
-				articles.remove(foundArticle); //지우고자 하는 게시물을 넣는다.
+				
+				//사용자가 지우고자 하는 게시글이 articles의 안에 몇번 인덱스에 들어있는지
+				//index버전 remove
+				articles.remove(foundIndex); //지우고자 하는 게시물을 넣는다.
 				
 				
 				System.out.println(id + "번 계시물을 삭제했습니다.");	
 			}
+			
 			else {
 				System.out.println("존재하지 않는 명령어 입니다");
 			}
