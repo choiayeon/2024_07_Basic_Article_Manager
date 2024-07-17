@@ -6,15 +6,11 @@ import java.util.Scanner;
 
 
 /*
+조회수 기능
 
-게시물을 작성하는 시점의 현재 날짜와 시간을 구해서 게시물과 함께 저장
-게시물이 작성되는 시점 
-현재 날짜와 시간데이터 
-한개의 게시물 -> article 객체 (여기에 같이 저장) 
+조회수 데이터는 어디에 저장되어 있어야 할까?
 
-
-목록, 상세보기 시에 게시물이 쓰여진 데이터가 같이 나타날 수 있도록 
-
+articles -> 각각의 article 
 */
 public class Main {
 	public static void main(String[] args) {
@@ -55,7 +51,7 @@ public class Main {
 				
 				lastArticleId++;	
 				
-				Article article = new Article(lastArticleId,Util.getDateStr(),title,body);
+				Article article = new Article(lastArticleId,Util.getDateStr(),title,body,0);
 				
 				articles.add(article);
 				
@@ -70,11 +66,11 @@ public class Main {
 					
 				}
 					
-				System.out.println("번호	|	제목	|	작성일");
+				System.out.println("번호	|	제목	|	작성일	|	조회수");
 					
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
-					System.out.printf("%d	|	%s\n", article.id,article.title,article.regDate);
+					System.out.printf("%d	|	%s	|	%s	|	%d\n", article.id,article.title,article.regDate,article.viewCnt);
 					}
 				
 			}
@@ -107,11 +103,13 @@ public class Main {
 					continue;
 				}
 				
+				foundArticle.viewCnt++;
+				
 				System.out.printf("번호 : %d\n",foundArticle.id);
 				System.out.printf("작성일 : %s\n",foundArticle.regDate);
 				System.out.printf("제목 : %s\n",foundArticle.title);
 				System.out.printf("내용 : %s\n",foundArticle.body);
-				
+				System.out.printf("조회수 : %d\n",foundArticle.viewCnt);
 				
 			}
 			else if (cmd.startsWith("article modify ")) {
@@ -215,15 +213,16 @@ class Article {
 	String regDate;
 	String title;
 	String body;
+	int viewCnt;
 	
-	public Article(int id,String regDate,String title,String body) { //생성자
+	public Article(int id,String regDate,String title,String body,int viewCnt) { //생성자
 		
 		
 		this.id = id;
 		this.regDate = regDate;
 		this.title = title;
 		this.body = body;
-			
+		this.viewCnt = viewCnt;
 	}	
 }
 
